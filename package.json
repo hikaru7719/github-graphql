@@ -4,6 +4,7 @@
   "repository": "https://github.com/hikaru7719/github-graphql.git",
   "author": "hikaru7719",
   "devDependencies": {
+    "ncc": "^0.3.6",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
   },
