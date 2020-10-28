@@ -7,7 +7,33 @@ const client = new GraphQLClient("https://api.github.com/graphql", {
   },
 });
 
-export async function search(name: string) {
+export type SearchResponse = {
+  search: {
+    nodes: Array<Repository>;
+  };
+};
+
+type Repository = {
+  nameWithOwner: string;
+  description: string;
+  stargazerCount: number;
+  url: string;
+  languages: {
+    nodes: Array<{ name: string }>;
+  };
+  pullRequests: {
+    nodes: Array<{ author: Author }>;
+  };
+};
+
+type Author = {
+  login: string;
+  starredRepositories: {
+    nodes: Array<Repository>;
+  };
+};
+
+export async function search(name: string): Promise<SearchResponse> {
   const query = gql`
     query searchByName($name: String!) {
       search(query: $name, type: REPOSITORY, first: 1) {
@@ -24,6 +50,7 @@ export async function search(name: string) {
                         nameWithOwner
                         description
                         stargazerCount
+                        url
                         languages(first: 1) {
                           nodes {
                             name
@@ -40,6 +67,5 @@ export async function search(name: string) {
       }
     }
   `;
-  const resp = await client.request(query, { name });
-  return resp;
+  return client.request<SearchResponse>(query, { name });
 }

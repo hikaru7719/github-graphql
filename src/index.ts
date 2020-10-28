@@ -1,8 +1,9 @@
 import { search } from "./api";
+import { print } from "./table";
 
 async function main() {
   const resp = await search("jest");
-  console.log(JSON.stringify(resp));
+  print(resp);
 }
 
 main();
