@@ -11,7 +11,7 @@ export function print(response: SearchResponse) {
     const user = v.author.login;
     return v.author.starredRepositories.nodes.map((r) => {
       return [
-        r.url,
+        chalk.underline(r.url),
         unemojify(r.description),
         emphasizeStarCount(r.stargazerCount),
         user,
