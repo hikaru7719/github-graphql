@@ -1,9 +1,15 @@
 import { search } from "./api";
 import { print } from "./table";
+import { Command } from "commander";
 
-async function main() {
-  const resp = await search("TypeScript");
-  print(resp);
+async function execute(target: string) {
+  const result = await search(target);
+  print(result);
 }
 
-main();
+const cmd = new Command("gq");
+cmd.command("repo <target>").action(async (target: string) => {
+  await execute(target);
+});
+
+cmd.parse(process.argv);

@@ -20,6 +20,9 @@ export function print(response: SearchResponse) {
   });
   const config = {
     columns: {
+      0: {
+        width: 60,
+      },
       1: {
         width: 60,
       },
